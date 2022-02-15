@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EditMovieRequest;
+use App\Http\Requests\EditQuoteRequest;
 use App\Http\Requests\MovieFormRequest;
 use App\Http\Requests\QuoteFormRequest;
 use App\Models\Movie;
@@ -31,7 +32,7 @@ class AdminController extends Controller
     {
         $attributes = $request->validated();
 
-        $movie = movie::find($id)->update($attributes);
+        $movie = Movie::find($id)->update($attributes);
         if ($movie) {
             return ["result"=>'The movie has been updated'];
         } else {
@@ -41,11 +42,8 @@ class AdminController extends Controller
 
     public function deleteMovie($id)
     {
-        // $movie = Movie::find($id);
-        // Quote::where('movie_id', $movie->id)->delete();
-        // $movie->delete();
-        // return;
         $movie = Movie::where('id', $id)->delete();
+        Quote::where('movie_id', $id)->delete();
         if ($movie) {
             return ["result"=> "Movie has been deleted"];
         } else {
@@ -58,40 +56,51 @@ class AdminController extends Controller
         return Movie::find($id);
     }
 
-    // public function addQuote(QuoteFormRequest $request)
-    // {
-    //     $quote = new Quote();
-    //     $quote->setTranslations('text', $request->input('text'));
-    //     $quote->movie_id = $request->movie_id;
-    //     $quote->thumbnail = request()->input('thumbnail')->store('thumbnails');
-    //     $quote->save();
+    public function showQuotes()
+    {
+        return Quote::with('movie')->get();
+    }
 
-    //     return $quote;
-    // }
-
-    public function addQuote(Request $request, QuoteFormRequest $req)
+    public function addQuote(QuoteFormRequest $request)
     {
         $quote = new Quote();
-        $quote->setTranslations('text', $req->input('text'));
-        $quote->movie_id = $req->movie_id;
-        // $quote->thumbnail = $req->file('thumbnail')->store('thumbnails');
-        if ($request->hasFile('thumbnail')) {
-            $file = $request->file('thumbnail');
-            $filename = $file->getClientOriginalName();
-            $finalName = date('His') . $filename;
-
-            $request->file('thumbnail')->storeAs('images/', $finalName, 'public');
-            return response()->json(['message' => 'Successfully upload an image']);
-        } else {
-            return response()->json(['message'=>'You must select the image first']);
-        }
+        $quote->setTranslations('text', $request->input('text'));
+        $quote->movie_id = $request->movie_id;
+        $quote->thumbnail = $request->file('thumbnail')->store('thumbnails');
         $quote->save();
 
         return $quote;
     }
 
-    public function showQuotes()
+    public function deleteQuote($id)
     {
-        return Quote::all();
+        $quote = Quote::where('id', $id)->delete();
+        if ($quote) {
+            return ["result"=> "Movie has been deleted"];
+        } else {
+            return ["result"=> "operation failed"];
+        }
+    }
+
+    public function editQuote($id)
+    {
+        return Quote::find($id);
+    }
+
+
+    public function updateQuote($id, EditQuoteRequest $request)
+    {
+        $attributes = $request->validated();
+
+        if (isset($attributes['thumbnail'])) {
+            $attributes['thumbnail'] = $request->file('thumbnail')->store('thumbnails');
+        }
+
+        $quote = Quote::find($id)->update($attributes);
+        if ($quote) {
+            return ["result"=>'The movie has been updated'];
+        } else {
+            return ["result"=> "operation failed"];
+        }
     }
 }

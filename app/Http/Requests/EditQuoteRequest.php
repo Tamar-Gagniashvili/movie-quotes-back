@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class QuoteFormRequest extends FormRequest
+class EditQuoteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +24,9 @@ class QuoteFormRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'thumbnail' => 'required|image',
+            'thumbnail' => 'image',
             'text'      => 'required',
-            'movie_id'  => ['required', Rule::exists('movies', 'id')],
+            'movie_id'  => 'required',
         ];
 
         foreach (config('app.available_locales') as $locale) {
