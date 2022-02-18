@@ -16,4 +16,11 @@ class LoginController extends Controller
             return ["error"=>"Your provided credentials could not be verified."];
         };
     }
+
+    public function logout()
+    {
+        auth()->logout();
+
+        return ['success'=>'You are logout out'];
+    }
 }

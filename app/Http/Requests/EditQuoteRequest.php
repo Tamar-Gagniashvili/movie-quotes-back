@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class EditQuoteRequest extends FormRequest
 {
@@ -25,8 +26,8 @@ class EditQuoteRequest extends FormRequest
     {
         $rules = [
             'thumbnail' => 'image',
-            'text'      => 'required',
-            'movie_id'  => 'required',
+            'text'      => '',
+            'movie_id'  => '',
         ];
 
         foreach (config('app.available_locales') as $locale) {

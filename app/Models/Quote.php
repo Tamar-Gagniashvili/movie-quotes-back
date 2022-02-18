@@ -16,7 +16,7 @@ class Quote extends Model
         return $this->belongsTo(Movie::class);
     }
 
-    protected $fillable = ['text', 'thumbnail'];
+    protected $guarded = ['id'];
 
     public $translatable = ['text'];
 }

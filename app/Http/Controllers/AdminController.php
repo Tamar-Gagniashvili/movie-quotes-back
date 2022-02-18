@@ -9,6 +9,7 @@ use App\Http\Requests\QuoteFormRequest;
 use App\Models\Movie;
 use App\Models\Quote;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
@@ -95,8 +96,9 @@ class AdminController extends Controller
         if (isset($attributes['thumbnail'])) {
             $attributes['thumbnail'] = $request->file('thumbnail')->store('thumbnails');
         }
-
-        $quote = Quote::find($id)->update($attributes);
+        
+        $quote = Quote::find($id);
+        $quote->update($attributes);
         if ($quote) {
             return ["result"=>'The movie has been updated'];
         } else {
