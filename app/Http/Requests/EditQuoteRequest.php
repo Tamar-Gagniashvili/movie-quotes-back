@@ -26,8 +26,8 @@ class EditQuoteRequest extends FormRequest
     {
         $rules = [
             'thumbnail' => 'image',
-            'text'      => '',
-            'movie_id'  => '',
+            'text'      => 'required',
+            'movie_id'  => 'required',
         ];
 
         foreach (config('app.available_locales') as $locale) {

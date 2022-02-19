@@ -1,0 +1,85 @@
+openapi: 3.0.0
+info:
+  title: Coronatime API
+  description: Here goes description
+  version: 0.1.9
+
+servers:
+  - url: http://localhost:8000/api/
+    description: local server
+  - url: http://producation.app/api
+    description: production server
+
+paths:
+  /movies:
+    get:
+      summary: Returns a list of movies.
+      responses:
+        '200': 
+          description: A JSON array of movies
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+
+  /quotes:
+    get:
+      summary: Returns a list of quotes.
+      responses:
+        '200': 
+          description: A JSON array of quotes
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+
+  /get-single-quote:
+    get:
+      summary: Returns a random single quote on custom page.
+      responses:
+        '200': 
+          description: A JSON array of a quote
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+
+  /get-quotes/{id}:
+    get:
+      summary: Returns an array of quotes with the same movie_id.
+      parameters:
+        - movie_id: id
+          in: path
+          required: true
+          description: Parameter is the id of the movie.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200': 
+          description: A JSON array of quotes
+          content:
+            application/json:
+              schema: 
+                type: array
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 2
+                  movie:
+                    type: string
+                    example: Pulp fiction
+                '400':
+                  description: The specified user ID is invalid (not a number).
+                '404':
+                  description: A user with the specified ID was not found.
+                default:
+                  description: Unexpected error
