@@ -35,7 +35,7 @@ class AdminController extends Controller
 
         $movie = Movie::find($id)->update($attributes);
         if ($movie) {
-            return ["result"=>'The movie has been updated'];
+            return ["result"=>'The Movie has been updated'];
         } else {
             return ["result"=> "operation failed"];
         }
@@ -46,7 +46,7 @@ class AdminController extends Controller
         $movie = Movie::where('id', $id)->delete();
         Quote::where('movie_id', $id)->delete();
         if ($movie) {
-            return ["result"=> "Movie has been deleted"];
+            return ["result"=> "The Movie has been deleted"];
         } else {
             return ["result"=> "operation failed"];
         }
@@ -77,7 +77,7 @@ class AdminController extends Controller
     {
         $quote = Quote::where('id', $id)->delete();
         if ($quote) {
-            return ["result"=> "Movie has been deleted"];
+            return ["result"=> "The Quote has been deleted"];
         } else {
             return ["result"=> "operation failed"];
         }
@@ -100,7 +100,7 @@ class AdminController extends Controller
         $quote = Quote::find($id);
         $quote->update($attributes);
         if ($quote) {
-            return ["result"=>'The movie has been updated'];
+            return ["result"=>'The Movie has been updated'];
         } else {
             return ["result"=> "operation failed"];
         }

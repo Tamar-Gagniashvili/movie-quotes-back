@@ -14,6 +14,8 @@ class LoginController extends Controller
         $user=User::where('email', $request->email)->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
             return ["error"=>"Your provided credentials could not be verified."];
+        } else {
+            ['success'=>'You are logged in'];
         };
     }
 
@@ -21,6 +23,6 @@ class LoginController extends Controller
     {
         auth()->logout();
 
-        return ['success'=>'You are logout out'];
+        return ['success'=>'You are logged out'];
     }
 }
