@@ -6,7 +6,7 @@ info:
 servers:
   - url: http://localhost:8000/api
     description: local server
-  - url: http://movie-quotes-api.tamar.redberryinternship.ge
+  - url: http://movie-quotes-api.tamar.redberryinternship.ge/api
     description: production server
 
 paths:
