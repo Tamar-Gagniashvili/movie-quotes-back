@@ -8,10 +8,6 @@ use App\Http\Requests\MovieFormRequest;
 use App\Http\Requests\QuoteFormRequest;
 use App\Models\Movie;
 use App\Models\Quote;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
@@ -27,7 +23,7 @@ class AdminController extends Controller
 
     public function showMovies()
     {
-        return Movie::all();
+        return Movie::latest('updated_at')->get();
     }
 
     public function updateMovie($id, EditMovieRequest $request)
@@ -60,7 +56,7 @@ class AdminController extends Controller
 
     public function showQuotes()
     {
-        return Quote::with('movie')->get();
+        return Quote::with('movie')->latest('updated_at')->get();
     }
 
     public function addQuote(QuoteFormRequest $request)

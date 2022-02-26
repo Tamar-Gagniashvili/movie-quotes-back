@@ -15,7 +15,7 @@ class Movie extends Model
     {
         return $this->hasMany(Quote::class);
     }
-    protected $fillable = ['slug', 'name'];
+    protected $guarded = ['id'];
 
     public $translatable = ['name'];
 }

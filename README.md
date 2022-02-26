@@ -137,9 +137,12 @@ Which generates auth key.
 #
 <h2 id="migrations">Migration</h2>
 
-After passing getting started section, migrating is a simple process, you just need to execute:
+After passing getting started section, migrating is a simple process, you just need to execute two command:
 ```sh
 php artisan migrate
+```
+```sh
+php artisan db:seed
 ```
 
 In order to be able to use the admin panel, you need to use the artisan command, that is writen below and follow the simple instructions, just provide your email and password:
