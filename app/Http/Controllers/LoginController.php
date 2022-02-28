@@ -19,11 +19,9 @@ class LoginController extends Controller
             return ["error"=>"Your provided credentials could not be verified."];
         };
     
-        $token = $user->createToken('my-app-token')->plainTextToken;
         
         $response = [
             'user' => $user,
-            'token' => $token
         ];
         
         return response($response, 201);
