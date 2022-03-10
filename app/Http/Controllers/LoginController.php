@@ -18,13 +18,8 @@ class LoginController extends Controller
         } else {
             return ["error"=>"Your provided credentials could not be verified."];
         };
-    
         
-        $response = [
-            'user' => $user,
-        ];
-        
-        return response($response, 201);
+        return response(['user' => $user], 201);
     }
 
     public function logout()

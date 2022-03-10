@@ -21,7 +21,7 @@ class AdminController extends Controller
         return $movie;
     }
 
-    public function showMovies()
+    public function getMovies()
     {
         return Movie::latest('updated_at')->get();
     }
@@ -31,22 +31,14 @@ class AdminController extends Controller
         $attributes = $request->validated();
 
         $movie = Movie::find($id)->update($attributes);
-        if ($movie) {
-            return ["result"=>'The Movie has been updated'];
-        } else {
-            return ["result"=> "operation failed"];
-        }
+        return ["result"=> $movie ? 'The Movie has been updated' : "operation failed"];
     }
 
     public function deleteMovie($id)
     {
-        $movie = Movie::where('id', $id)->delete();
+        $movie = Movie::destroy($id);
         Quote::where('movie_id', $id)->delete();
-        if ($movie) {
-            return ["result"=> "The Movie has been deleted"];
-        } else {
-            return ["result"=> "operation failed"];
-        }
+        return ["result"=> $movie ? 'The Movie has been deleted' : "operation failed"];
     }
 
     public function editMovie($id)
@@ -54,7 +46,7 @@ class AdminController extends Controller
         return Movie::find($id);
     }
 
-    public function showQuotes()
+    public function getQuotes()
     {
         return Quote::with('movie')->latest('updated_at')->get();
     }
@@ -72,12 +64,8 @@ class AdminController extends Controller
 
     public function deleteQuote($id)
     {
-        $quote = Quote::where('id', $id)->delete();
-        if ($quote) {
-            return ["result"=> "The Quote has been deleted"];
-        } else {
-            return ["result"=> "operation failed"];
-        }
+        $quote = Quote::destroy($id);
+        return ["result"=> $quote ? 'The Quote has been deleted' : "operation failed"];
     }
 
     public function editQuote($id)
@@ -94,12 +82,7 @@ class AdminController extends Controller
             $attributes['thumbnail'] = $request->file('thumbnail')->store('thumbnails');
         }
         
-        $quote = Quote::find($id);
-        $quote->update($attributes);
-        if ($quote) {
-            return ["result"=>'The Movie has been updated'];
-        } else {
-            return ["result"=> "operation failed"];
-        }
+        $quote = Quote::find($id)->update($attributes);
+        return ["result"=> $quote ? 'The Quote has been updated' : "operation failed"];
     }
 }

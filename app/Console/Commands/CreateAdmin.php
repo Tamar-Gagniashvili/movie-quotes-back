@@ -25,7 +25,6 @@ class CreateAdmin extends Command
         $user->password = Hash::make($pwd);
         $user->save();
 
-        echo 'Admin Created';
-        return 'admin created';
+        echo "Admin Created\n";
     }
 }
